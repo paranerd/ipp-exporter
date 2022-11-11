@@ -1,0 +1,8 @@
+---
+services:
+  app:
+    image: paranerd/ipp-exporter
+    container_name: ipp-exporter
+    restart: unless-stopped
+    ports:
+      - 9101:80
