@@ -10,11 +10,13 @@ Prometheus exporter for the Internet Printer Protocol (IPP)
 
 ```
 ---
+version: '3'
 services:
-  app:
+  ipp-exporter:
     image: paranerd/ipp-exporter
     container_name: ipp-exporter
     restart: unless-stopped
     ports:
       - 9101:80
+
 ```
