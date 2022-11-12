@@ -4,9 +4,14 @@
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/paranerd/ipp-exporter?label=Current%20Version&logo=github)](https://github.com/paranerd/ipp-exporter/tags)
 [![Docker Image Size (latest semver)](https://shields.api-test.nl:/docker/image-size/paranerd/ipp-exporter?label=Image%20Size&logo=docker)](https://hub.docker.com/repository/docker/paranerd/ipp-exporter)
 
-Prometheus exporter for the Internet Printer Protocol (IPP)
+Prometheus exporter for the Internet Printing Protocol (IPP)
 
-## Docker Compose
+## Run with Docker Run
+```
+docker run -d -p 9101:80 --name ipp-exporter paranerd/ipp-exporter
+```
+
+## Run with Docker Compose
 
 ```
 ---
@@ -20,3 +25,17 @@ services:
       - 9101:80
 
 ```
+
+## Query metrics
+```
+curl "<server_ip>:9101/probe?host=<printer_ipp_url_and_path>
+```
+
+## What's my printer's IPP URL?
+The best option is to check the printer manual to find the path.
+
+Here are the URLs for some of the major manufacturers:
+
+- Canon: `ipp(s)://<Printer IP>/ipp/print`
+- HP: `<Printer IP>:631/ipp/print`
+- Kyocera: `<Printer IP>:631/ipp/lp1`
