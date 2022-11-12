@@ -4,30 +4,38 @@ from pyipp import IPP, Printer
 
 app = FastAPI()
 
-@app.get('/metrics', response_class=PlainTextResponse)
+@app.get('/probe', response_class=PlainTextResponse)
 async def metrics(host):
+  black_level = 0
+  color_level = 0
+  busy = 0
+  success = 0
+
   async with IPP(host) as ipp:
-    printer: Printer = await ipp.printer()
+    try:
+      printer: Printer = await ipp.printer()
 
-    black_level = get_cartrige_level(printer, 'Black')
-    color_level = get_cartrige_level(printer, 'Color')
-    state = get_state(printer)
+      black_level = get_cartrige_level(printer, 'Black')
+      color_level = get_cartrige_level(printer, 'Color')
+      busy = 1 if is_busy(printer) else 0
+      success = 1
+    except Exception as e:
+      print('Something went wrong', e)
+    finally:
+      return ('# HELP busy If printer is currently busy\n'
+              '# TYPE busy gauge\n'
+              f'''busy {busy}\n'''
+              '# HELP cartridge_level_percent Cartridge fill level by color\n'
+              '# TYPE cartridge_level_percent gauge\n'
+              f'''cartridge_level_percent{"black"} {black_level}\n'''
+              f'''cartridge_level_percent{"color"} {color_level}\n'''
+              '# HELP success Displays whether or not the probe was a success\n'
+              '# TYPE success gauge\n'
+              f'''success {success}\n'''
+      )
 
-    return ('# HELP is_printing Printer state\n'
-            '# TYPE is_printing gauge\n'
-            f'''is_printing {state != 'idle'}\n'''
-            '\n'
-            '# HELP black_level Level of black color\n'
-            '# TYPE black_level gauge\n'
-            f'''black_level {black_level}\n'''
-            '\n'
-            '# HELP color_level Level of black color\n'
-            '# TYPE color_level gauge\n'
-            f'''color_level {color_level}'''
-    )
-
-def get_state(printer):
-  return printer.state.printer_state
+def is_busy(printer):
+  return printer.state.printer_state != 'idle'
 
 def get_cartrige_level(printer, name):
   for marker in printer.markers:
