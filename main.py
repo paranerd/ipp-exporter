@@ -5,13 +5,13 @@ from pyipp import IPP, Printer
 app = FastAPI()
 
 @app.get('/probe', response_class=PlainTextResponse)
-async def metrics(host):
+async def metrics(target):
   black_level = 0
   color_level = 0
   busy = 0
   success = 0
 
-  async with IPP(host) as ipp:
+  async with IPP(target) as ipp:
     try:
       printer: Printer = await ipp.printer()
 
