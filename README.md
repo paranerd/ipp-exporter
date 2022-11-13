@@ -39,3 +39,17 @@ Here are the URLs for some of the major manufacturers:
 - Canon: `ipp(s)://<Printer IP>/ipp/print`
 - HP: `<Printer IP>:631/ipp/print`
 - Kyocera: `<Printer IP>:631/ipp/lp1`
+
+## Example output
+```
+# HELP busy If printer is currently busy
+# TYPE busy gauge
+busy 0
+# HELP cartridge_level_percent Cartridge fill level by color
+# TYPE cartridge_level_percent gauge
+cartridge_level_percent{type="black"} 30
+cartridge_level_percent{type="color"} 50
+# HELP success Displays whether or not the probe was a success
+# TYPE success gauge
+success 1
+```
