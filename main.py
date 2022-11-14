@@ -5,7 +5,7 @@ from pyipp import IPP, Printer
 app = FastAPI()
 
 @app.get('/probe', response_class=PlainTextResponse)
-async def metrics(target):
+async def probe(target):
   black_level = 0
   color_level = 0
   busy = 0
