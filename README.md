@@ -28,7 +28,7 @@ services:
 
 ## Query metrics
 ```
-curl "<server_ip>:9101/probe?host=<printer_ipp_url_and_path>
+curl "<server_ip>:9101/probe?target=<printer_ipp_url_and_path>
 ```
 
 ## What's my printer's IPP URL?
