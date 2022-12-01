@@ -42,14 +42,14 @@ Here are the URLs for some of the major manufacturers:
 
 ## Example output
 ```
-# HELP busy If printer is currently busy
-# TYPE busy gauge
-busy 0
-# HELP cartridge_level_percent Cartridge fill level by color
-# TYPE cartridge_level_percent gauge
-cartridge_level_percent{type="black"} 30
-cartridge_level_percent{type="color"} 50
-# HELP success Displays whether or not the probe was a success
-# TYPE success gauge
-success 1
+# HELP ipp_busy If printer is currently busy
+# TYPE ipp_busy gauge
+ipp_busy 0
+# HELP ipp_cartridge_level_percent Cartridge fill level by color
+# TYPE ipp_cartridge_level_percent gauge
+ipp_cartridge_level_percent{type="black"} 30
+ipp_cartridge_level_percent{type="color"} 50
+# HELP ipp_success Displays whether or not the probe was a success
+# TYPE ipp_success gauge
+ipp_success 1
 ```
